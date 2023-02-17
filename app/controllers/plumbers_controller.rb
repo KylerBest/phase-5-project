@@ -1,3 +1,0 @@
-class PlumbersController < ApplicationController
-    
-end

@@ -1,3 +1,6 @@
 class PlumberSerializer < ActiveModel::Serializer
-  attributes :id, :name, :hourly_rate
+  attributes :id, :type, :name, :hourly_rate, :jobs
+
+  has_many :assignments
+  has_many :jobs, through: :assignments
 end

@@ -1,4 +1,4 @@
 class Bill < ApplicationRecord
-  belongs_to :client_id
-  belongs_to :job_id
+  belongs_to :job
+  has_one :client, through: :job
 end

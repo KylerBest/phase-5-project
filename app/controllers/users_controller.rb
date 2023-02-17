@@ -1,15 +1,24 @@
 class UsersController < ApplicationController
-    skip_before_action :authorize, only: :certificate
+    skip_before_action :authorize, only: :create
 
     def show
         render json: @current_user, status: :ok
     end
 
     def create
-        user = User.create!(user_params)
-        session[:user_id] = user.id
-        render json: user, status: :created
+        case params[:type]
+
+        when 'Client'
+            @current_user = Client.create!(user_params)
+
+        when 'Plumber'
+            @current_user = Plumber.create!(user_params)
+        end
+        session[:user_id] = @current_user.id
+        render json: @current_user, status: :created
+
     end
+    
 
     def destroy
         session.delete :user_id
@@ -20,7 +29,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:username, :password, :password_confirmation)
+        params.permit(:type, :name, :phone, :address, :email, :password, :password_confirmation)
     end
 
 end

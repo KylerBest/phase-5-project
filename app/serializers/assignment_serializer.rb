@@ -1,5 +1,5 @@
 class AssignmentSerializer < ActiveModel::Serializer
-  attributes :id, :hours_worked
-  has_one :plumber_id
-  has_one :job_id
+  attributes :id, :hours_worked, :plumber, :job
+  has_one :plumber
+  has_one :job
 end
