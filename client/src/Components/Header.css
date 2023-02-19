@@ -5,10 +5,21 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    background: rgb(206, 215, 221);
+    background: white;
 }
 
 header h1{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(37, 50, 68);
+    font-weight: bolder;
+    font-size: xx-large;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.39);
+}
+
+header h2{
     display: flex;
     flex-direction: column;
     color: black;
@@ -19,7 +30,7 @@ header h1{
     cursor: default;
 }
 
-header h1 p{
+header h2 p{
     font-size: 1rem;
 }
 
@@ -43,10 +54,10 @@ header .logout-button{
 
 .tabs{
     position: absolute;
-    left: 5rem;
+    left: 8rem;
     bottom: 0;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .tab{

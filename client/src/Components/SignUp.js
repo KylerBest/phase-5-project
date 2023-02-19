@@ -3,7 +3,7 @@ import React, {useState, useContext} from "react";
 import {Link, useHistory} from "react-router-dom"
 import { UserContext } from "../App";
 
-function SignUp({}){
+function SignUp(){
     const history = useHistory()
     const [credentials, setCredentials] = useState({
         type: "Client",

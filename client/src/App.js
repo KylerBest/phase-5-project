@@ -10,10 +10,11 @@ import React, {useState, useEffect, createContext} from 'react';
 import Header from './Components/Header'
 import SignIn from './Components/SignIn';
 import SignUp from "./Components/SignUp";
+import ClientJobsPage from "./Components/ClientJobsPage";
+import ClientRequestForm from "./Components/ClientRequestForm";
 
 
 function App() {
-  
   const history = useHistory()
   const [user, setUser] = useState(null)
   
@@ -39,11 +40,15 @@ function App() {
             <Switch>
 
               <Route path="/home">
-                <h1>Home Page</h1>
+                {user ? (user.type === "Client" ? <ClientJobsPage/> : <>Plumber Home Page</>) : <>Loading...</>}
               </Route>
 
               <Route path="/bills">
-                {user ? <h1>BILLS</h1> : <h1>Loading bills...</h1>}
+                {user ? (user.type === "Client" ? <h1>BILLS</h1> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+              </Route>
+
+              <Route path="/request">
+                {user ? (user.type === "Client" ? <ClientRequestForm /> : <Redirect to="/home" />) : <h1>Loading...</h1>}
               </Route>
 
               <Route path="/sign_in">
