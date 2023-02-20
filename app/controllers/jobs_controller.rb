@@ -1,12 +1,7 @@
 class JobsController < ApplicationController
 
     def index
-        client = Client.find_by(id: params[:client_id])
-        if client
-            jobs = client.jobs
-        else
-            jobs = Job.all
-        end
+        jobs = @current_user.jobs
         render json: jobs, status: :ok
     end
 
@@ -16,16 +11,14 @@ class JobsController < ApplicationController
     end
 
     def create
-        client = Clint.find_by(id: params[:client_id])
-        job = client.jobs.create!(job_params)
-        job.update(status: "requested")
-        render json: job, status: :created
+        @current_user.jobs.create!(job_params)
+        render json: @current_user, status: :ok
     end
 
     private
 
     def job_params
-        params.permit(:id, :client_id, :location, :description, :duration_in_hours, :rate)
+        params.permit(:id, :client_id, :type_of_work, :description, :hours, :rate, :status)
     end
 
 end

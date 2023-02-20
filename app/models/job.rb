@@ -1,8 +1,10 @@
 class Job < ApplicationRecord
-  validates :status, inclusion: { in: %w[Requested Accepted Finished Cancel],
-    message: "Job status may only be: Requested, Accepted, Finished, or Canceled" }
+  validates :status, inclusion: { in: ["Requested", "Accepted", "In progress", "Finished", "Canceled"],
+    message: "Invalid job status" }
 
-    attribute :status, :string, default: 'Accepted'
+  validates :type_of_work, presence: true
+
+  attribute :status, :string, default: 'Requested'
 
   belongs_to :client
   has_one :bill

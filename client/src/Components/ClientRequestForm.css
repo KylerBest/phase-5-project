@@ -14,7 +14,7 @@ form#job-form{
     border-radius: 20px;
 }
 
-form label{
+form#job-form label{
     color: white;
     font-size: 2rem;
 }
@@ -49,8 +49,18 @@ form h1 p{
     display: flex;
     justify-content: space-evenly;
     gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .radio label{
-    font-size: small;
+    font-size: small !important;
+}
+
+.submit-button{
+    padding: .5rem;
+    margin-top: 1rem;
+}
+
+#unknown{
+    color: yellow;
 }
