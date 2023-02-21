@@ -24,11 +24,12 @@ html{
     position: relative;
     margin: 0;
     background: rgb(84, 108, 128);
-    min-height: 100vh;
+    height: 100vh;
     min-width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
 }
 
 .main{

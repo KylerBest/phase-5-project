@@ -13,12 +13,14 @@ import SignUp from "./Components/SignUp";
 import ClientJobsPage from "./Components/ClientJobsPage";
 import ClientRequestForm from "./Components/ClientRequestForm";
 import AssignmentsPage from "./Components/AssignmentsPage";
+import BillsPage from "./Components/BillsPage";
+import OpenJobsPage from "./Components/OpenJobsPage";
 
 
 function App() {
   const history = useHistory()
   const [user, setUser] = useState(null)
-  const [pendingRequests, setPendingRequests] = useState([])
+  const [openJobs, setOpenJobs] = useState([])
   
   useEffect(() => {
     fetch('/auto_login')
@@ -28,10 +30,10 @@ function App() {
           console.log(user)
           setUser(user)
           if(user.type === "Plumber"){
-            fetch('/pending_requests')
+            fetch('/open_jobs')
               .then(r => {
                 if(r.ok){
-                  r.json().then(console.log)
+                  r.json().then(setOpenJobs)
                 }
               })
           }
@@ -44,7 +46,7 @@ function App() {
   
   return (
     <Router>
-        <UserContext.Provider value={{user, setUser}}>
+        <UserContext.Provider value={{user, setUser, openJobs, setOpenJobs}}>
           {user ? <Header/> : <></>}
           <div className="main">
             <Switch>
@@ -53,12 +55,16 @@ function App() {
                 {user ? (user.type === "Client" ? <ClientJobsPage/> : <AssignmentsPage/>) : <h1>Loading...</h1>}
               </Route>
 
-              <Route path="/pending_requests">
-                {user ? (user.type === "Plumber" ? <h1>PENDING REQUESTS PAGE</h1> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+              <Route path="/open_jobs">
+                {user ? (user.type === "Plumber" ? <OpenJobsPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+              </Route>
+
+              <Route path="/manager">
+                {user ? (user.type === "Plumber" && user.manager ? <h1>MANAGER PAGE</h1> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
               </Route>
 
               <Route path="/bills">
-                {user ? (user.type === "Client" ? <h1>BILLS</h1> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+                {user ? (user.type === "Client" ? <BillsPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
               </Route>
 
               <Route path="/request">

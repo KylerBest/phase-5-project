@@ -6,7 +6,15 @@ Rails.application.routes.draw do
 
   post "/create_account", to: "users#create"
 
-  get "/pending_requests", to: "jobs#pending_requests"
+  get "/open_jobs", to: "jobs#open_jobs"
+
+  get "/bills/:id/pay", to: "bills#pay"
+
+  get "/jobs/:id/accept", to: "jobs#accept"
+  get "/jobs/:id/start", to: "jobs#start"
+  get "/jobs/:id/finish", to: "jobs#finish"
+  get "/jobs/:id/add_slot", to: "jobs#add_slot"
+  get "/jobs/:id/leave", to: "jobs#leave"
 
   resources :bills
   resources :jobs

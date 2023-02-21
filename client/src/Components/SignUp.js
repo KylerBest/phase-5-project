@@ -17,7 +17,7 @@ function SignUp(){
     const [errors, setErrors] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
-    const {setUser} = useContext(UserContext)
+    const {setUser, setOpenJobs} = useContext(UserContext)
 
     function onSignUp(e){
         e.preventDefault()
@@ -34,6 +34,14 @@ function SignUp(){
             if(r.ok){
                 r.json().then(user => {
                     setUser(user)
+                    if(user.type === "Plumber"){
+                        fetch('/open_jobs')
+                        .then(r => {
+                            if(r.ok){
+                                r.json().then(setOpenJobs)
+                            }
+                        })
+                    }
                     history.push('/home')
                 })
             }else{

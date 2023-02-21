@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_19_030548) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_21_204456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "assignments", force: :cascade do |t|
+    t.bigint "plumber_id", null: false
     t.bigint "job_id", null: false
-    t.bigint "plumber_id"
-    t.decimal "hours"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "join_date"
     t.index ["job_id"], name: "index_assignments_on_job_id"
     t.index ["plumber_id"], name: "index_assignments_on_plumber_id"
   end
@@ -42,6 +42,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_19_030548) do
     t.datetime "updated_at", null: false
     t.string "status"
     t.string "type_of_work"
+    t.datetime "accept_date"
+    t.datetime "start_date"
+    t.datetime "finish_date"
+    t.integer "open_slots"
     t.index ["client_id"], name: "index_jobs_on_client_id"
   end
 

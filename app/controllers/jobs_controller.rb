@@ -21,23 +21,56 @@ class JobsController < ApplicationController
         render json: @current_user, status: :ok
     end
 
-    def pending_requests
-        jobs = Job.where(status: "Requested")
+    def open_jobs
+        jobs = Job.where("open_slots > ?", 0).filter{|j| @current_user.jobs.exclude?(j)}
         render json: jobs, status: :ok
     end
 
+    def leave
+        job = @current_user.jobs.find_by(id: params[:id])
+        assignment = @current_user.assignments.find_by(job_id: params[:id])
+        assignment.destroy
+        job.update!(open_slots: job.open_slots + 1)
+        render json: @current_user, status: :ok
+    end
+
     def accept
-        @current_user.assignments.create!(job_id: params[:id])
+        @current_user.assignments.create!(job_id: params[:id], join_date: DateTime.now.getlocal)
         job = Job.find_by(id: params[:id])
-        job.update!(status: "Accepted")
+        
+        if job.status == "Requested"
+            job.update!(status: "Accepted", accept_date: DateTime.now.getlocal, open_slots: job.open_slots-1)
+        else
+            job.update!(open_slots: job.open_slots-1)
+        end
+
+        render json: @current_user, status: :ok
+    end
+
+    def start
+        job = @current_user.jobs.find_by(id: params[:id])
+        job.update!(status: "In progress", start_date: DateTime.now.getlocal)
+        render json: @current_user, status: :ok
+    end
+
+    def add_slot
+        job = @current_user.jobs.find_by(id: params[:id])
+        job.update!(open_slots: job.open_slots + 1)
         render json: @current_user, status: :ok
     end
 
     def finish
-        job = Job.find_by(id: params[:id])
-        job.update!(status: "Finished")
-        job.bill.create!(amount: job.rate * job.hours, paid: false)
-        render json: job, status: :ok
+        job = @current_user.jobs.find_by(id: params[:id])
+        finish_date = DateTime.now.getlocal
+
+        rate = 0
+        job.plumbers.each{|p| rate += p.wage}
+
+        hours = ((finish_date - job.start_date) / 1.hour).round(2)
+
+        job.update!(status: "Finished", finish_date: finish_date, hours: hours, rate: rate)
+        Bill.create!(job_id:job.id, amount: job.rate * job.hours + 80, paid: false)
+        render json: @current_user, status: :ok
     end
 
     private

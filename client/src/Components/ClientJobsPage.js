@@ -5,7 +5,7 @@ import "./ClientJobsPage.css"
 
 function ClientJobsPage(){
 
-    const {user} = useContext(UserContext)
+    const {user, setUser} = useContext(UserContext)
 
     function statusColor(j){
         switch(j.status){
@@ -22,6 +22,17 @@ function ClientJobsPage(){
         }
     }
 
+    function cancelJob(j){
+        fetch(`/jobs/${j.id}`, {
+            method: "DELETE"
+        })
+        .then(r => {
+            if(r.ok){
+                r.json().then(setUser)
+            }
+        })
+    }
+
     return (
         <div className="job-page">
             <h1>My Jobs</h1>
@@ -36,10 +47,11 @@ function ClientJobsPage(){
                     <textarea disabled={true} value={j.description || ""}/>
                     <p>Status: <span id={statusColor(j)}>{j.status}</span></p>
                     {j.status === "Requested" ? <></> : 
-                        <ul>Assigned plumbers:
-                            {j.plumbers.map(p => <li>{p.name} - {p.phone}</li>)}
+                        <ul className="plumbers">Assigned plumbers:
+                            {j.plumbers.map(p => <li key={p.id}>{p.name} - {p.phone}</li>)}
                         </ul>
                     }
+                    {j.status === "Finished" ? <></> : <button className="cancel button" onClick={() => cancelJob(j)}>Cancel</button>}
                 </div>)
                 : <p>Looks like you haven't had any jobs done. <Link to='/request'>Request one here.</Link></p>}
             </div>
