@@ -12,11 +12,13 @@ import SignIn from './Components/SignIn';
 import SignUp from "./Components/SignUp";
 import ClientJobsPage from "./Components/ClientJobsPage";
 import ClientRequestForm from "./Components/ClientRequestForm";
+import AssignmentsPage from "./Components/AssignmentsPage";
 
 
 function App() {
   const history = useHistory()
   const [user, setUser] = useState(null)
+  const [pendingRequests, setPendingRequests] = useState([])
   
   useEffect(() => {
     fetch('/auto_login')
@@ -25,6 +27,14 @@ function App() {
         res.json().then(user => {
           console.log(user)
           setUser(user)
+          if(user.type === "Plumber"){
+            fetch('/pending_requests')
+              .then(r => {
+                if(r.ok){
+                  r.json().then(console.log)
+                }
+              })
+          }
         })
       }else{
         history.push('/sign_in')
@@ -40,7 +50,11 @@ function App() {
             <Switch>
 
               <Route path="/home">
-                {user ? (user.type === "Client" ? <ClientJobsPage/> : <>Plumber Home Page</>) : <>Loading...</>}
+                {user ? (user.type === "Client" ? <ClientJobsPage/> : <AssignmentsPage/>) : <h1>Loading...</h1>}
+              </Route>
+
+              <Route path="/pending_requests">
+                {user ? (user.type === "Plumber" ? <h1>PENDING REQUESTS PAGE</h1> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
               </Route>
 
               <Route path="/bills">

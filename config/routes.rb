@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   post "/create_account", to: "users#create"
 
+  get "/pending_requests", to: "jobs#pending_requests"
+
   resources :bills
   resources :jobs
   resources :plumbers do

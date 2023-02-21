@@ -29,16 +29,16 @@ function SignUp(){
             },
             body: JSON.stringify(credentials)
         })
-        .then(res => {
-            if(res.ok){
-                res.json().then(user => {
+        .then(r => {
+            setIsLoading(false)
+            if(r.ok){
+                r.json().then(user => {
                     setUser(user)
                     history.push('/home')
                 })
             }else{
-                res.json().then(e => setErrors(e.errors))
+                r.json().then(e => setErrors(e.errors))
             }
-        setIsLoading(false)
     })
     }
     

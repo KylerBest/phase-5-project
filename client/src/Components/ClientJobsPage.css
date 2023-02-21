@@ -12,6 +12,10 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 2rem;
 }
+.jobs-container p{
+    grid-column: span 4;
+    color: white;
+}
 .job-listing{
     color: white;
     background: #698ba7;
@@ -36,4 +40,7 @@
 }
 #red{
     color: red;
+}
+#orange{
+    color: orange;
 }

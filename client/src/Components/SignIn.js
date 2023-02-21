@@ -23,6 +23,7 @@ function SignIn(){
             body: JSON.stringify(credentials)
         })
         .then(r => {
+            setIsLoading(false)
             if(r.ok){
                 r.json().then(user => {
                     setUser(user)
