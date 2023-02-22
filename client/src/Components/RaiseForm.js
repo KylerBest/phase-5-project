@@ -26,7 +26,7 @@ function RaiseForm({setShowRaiseForm, setPlumbers, p}){
 
     return(
         <div>
-            <input type="number" value={newWage} onChange={(e) => setNewWage(e.target.value)}/>
+            <p><input type="number" value={newWage} onChange={(e) => setNewWage(e.target.value)}/>/hr</p>
             <button onClick={() => handleRaise()}>Confirm</button>
         </div>
     )
