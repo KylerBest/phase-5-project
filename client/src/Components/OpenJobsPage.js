@@ -5,6 +5,21 @@ import "./ClientJobsPage.css"
 function OpenJobsPage(){
     const {setUser, openJobs, setOpenJobs} = useContext(UserContext)
 
+    function statusColor(j){
+        switch(j.status){
+            case "Requested":
+                return "orange"
+            case "Accepted":
+                return "green"
+            case "In progress":
+                return "yellow"
+            case "Finished":
+                return "blue"
+            case "Canceled":
+                return "red"
+        }
+    }
+    
     function handleAccept(j){
         fetch(`/jobs/${j.id}/accept`)
         .then(r => {
@@ -29,8 +44,9 @@ function OpenJobsPage(){
                     <p>Address: {j.client.address}</p>
                     <p>Job description:</p>
                     <textarea disabled={true} value={j.description}/>
+                    <p>Status: <span id={statusColor(j)}>{j.status}</span></p>
                     <p>Open Slots: {j.open_slots}</p>
-                    <button className="accept button" onClick={() => handleAccept(j)}>Accept Job</button>
+                    <button className="accept button" onClick={() => handleAccept(j)}>{j.status === "Requested" ? "Accept Job" : "Join Job"}</button>
                 </div>)
                 : <p>Looks like there are no open jobs.</p>}
             </div>

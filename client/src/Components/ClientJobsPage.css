@@ -52,6 +52,19 @@
 #orange{
     color: orange;
 }
+.edit-type-form{
+    display: flex;
+    flex-direction: column;
+}
+.edit-button{
+    position: absolute;
+    bottom: -2.2rem;
+    left: 1.5rem;
+    cursor: pointer;
+    padding: .15rem;
+    border-radius: 5px;
+    border: solid 1px black;
+}
 .button{
     position: absolute;
     bottom: -2.2rem;

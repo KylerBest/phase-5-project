@@ -12,7 +12,7 @@ function ManagePlumbersPage(){
         <div className="manage-plumbers-container">
             <h1>Manage Plumbers</h1>
             <div className="manage-plumbers-page">
-                {plumbers.map(p => <PlumberCard setPlumbers={setPlumbers} p={p} />)}
+                {plumbers.map(p => <PlumberCard key={p.id} setPlumbers={setPlumbers} p={p} />)}
             </div>
         </div>
     )

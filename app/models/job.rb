@@ -3,6 +3,7 @@ class Job < ApplicationRecord
     message: "Invalid job status" }
 
   validates :type_of_work, presence: true
+  validates :description, presence: true
   validates :open_slots, numericality: {greater_than: -1, message: "A job cannot have less than 0 open slots"}
 
   attribute :status, :string, default: 'Requested'

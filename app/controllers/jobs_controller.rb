@@ -21,6 +21,12 @@ class JobsController < ApplicationController
         render json: @current_user, status: :ok
     end
 
+    def edit
+        job = @current_user.jobs.find_by(id: params[:id])
+        job.update!(job_params)
+        render json: @current_user, status: :ok
+    end
+
     def open_jobs
         jobs = Job.where("open_slots > ?", 0).filter{|j| @current_user.jobs.exclude?(j)}
         render json: jobs, status: :ok

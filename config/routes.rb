@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get "/jobs/:id/finish", to: "jobs#finish"
   get "/jobs/:id/add_slot", to: "jobs#add_slot"
   get "/jobs/:id/leave", to: "jobs#leave"
+  patch "/jobs/:id/edit", to: "jobs#edit"
 
   resources :bills
   resources :jobs

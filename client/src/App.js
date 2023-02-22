@@ -26,10 +26,9 @@ function App() {
   
   useEffect(() => {
     fetch('/auto_login')
-    .then(res => {
-      if(res.ok){
-        res.json().then(user => {
-          console.log(user)
+    .then(r => {
+      if(r.ok){
+        r.json().then(user => {
           setUser(user)
           if(user.type === "Plumber"){
             fetch('/open_jobs')
@@ -58,54 +57,54 @@ function App() {
   
   return (
     <Router>
-        <UserContext.Provider value={{user, setUser, openJobs, setOpenJobs, plumbers, setPlumbers}}>
-          {user ? <Header/> : <></>}
-          <div className="main">
-            <Switch>
+      <UserContext.Provider value={{user, setUser, openJobs, setOpenJobs, plumbers, setPlumbers}}>
+        {user ? <Header/> : <></>}
+        <div className="main">
+          <Switch>
 
-              <Route path="/home">
-                {user ? (user.type === "Client" ? <ClientJobsPage/> : <AssignmentsPage/>) : <h1>Loading...</h1>}
-              </Route>
+            <Route path="/home">
+              {user ? (user.type === "Client" ? <ClientJobsPage/> : <AssignmentsPage/>) : <h1>Loading...</h1>}
+            </Route>
 
-              <Route path="/open_jobs">
-                {user ? (user.type === "Plumber" ? <OpenJobsPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
-              </Route>
+            <Route path="/open_jobs">
+              {user ? (user.type === "Plumber" ? <OpenJobsPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+            </Route>
 
-              <Route path="/manage_plumbers">
-                {user ? (user.type === "Plumber" && user.manager ? <ManagePlumbersPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
-              </Route>
+            <Route path="/manage_plumbers">
+              {user ? (user.type === "Plumber" && user.manager ? <ManagePlumbersPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+            </Route>
 
-              <Route path="/bills">
-                {user ? (user.type === "Client" ? <BillsPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
-              </Route>
+            <Route path="/bills">
+              {user ? (user.type === "Client" ? <BillsPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+            </Route>
 
-              <Route path="/request">
-                {user ? (user.type === "Client" ? <ClientRequestForm /> : <Redirect to="/home" />) : <h1>Loading...</h1>}
-              </Route>
+            <Route path="/request">
+              {user ? (user.type === "Client" ? <ClientRequestForm /> : <Redirect to="/home" />) : <h1>Loading...</h1>}
+            </Route>
 
-              <Route path="/sign_in">
-                <SignIn />
-              </Route>
+            <Route path="/sign_in">
+              <SignIn />
+            </Route>
 
-              <Route path="/sign_up">
-                <SignUp />
-              </Route>
+            <Route path="/sign_up">
+              <SignUp />
+            </Route>
 
-              <Route exact path="/">
-                <Redirect to="/home" />
-              </Route>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
 
-              <Route path="/404">
-                <h1>ERROR 404: Page not found...</h1>
-              </Route>
+            <Route path="/404">
+              <h1>ERROR 404: Page not found...</h1>
+            </Route>
 
-              <Route path="*">
-                <Redirect to="/404" />
-              </Route>
+            <Route path="*">
+              <Redirect to="/404" />
+            </Route>
 
-            </Switch>
-          </div>
-        </UserContext.Provider>
+          </Switch>
+        </div>
+      </UserContext.Provider>
     </Router>
   )
 }
