@@ -15,12 +15,14 @@ import ClientRequestForm from "./Components/ClientRequestForm";
 import AssignmentsPage from "./Components/AssignmentsPage";
 import BillsPage from "./Components/BillsPage";
 import OpenJobsPage from "./Components/OpenJobsPage";
+import ManagePlumbersPage from "./Components/ManagePlumbersPage";
 
 
 function App() {
   const history = useHistory()
   const [user, setUser] = useState(null)
   const [openJobs, setOpenJobs] = useState([])
+  const [plumbers, setPlumbers] = useState([])
   
   useEffect(() => {
     fetch('/auto_login')
@@ -33,7 +35,17 @@ function App() {
             fetch('/open_jobs')
               .then(r => {
                 if(r.ok){
-                  r.json().then(setOpenJobs)
+                  r.json().then(jobs => {
+                    setOpenJobs(jobs)
+                    if(user.manager){
+                      fetch('/plumbers')
+                      .then(r => {
+                        if(r.ok){
+                          r.json().then(setPlumbers)
+                        }
+                      })
+                    }
+                  })
                 }
               })
           }
@@ -59,8 +71,8 @@ function App() {
                 {user ? (user.type === "Plumber" ? <OpenJobsPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
               </Route>
 
-              <Route path="/manager">
-                {user ? (user.type === "Plumber" && user.manager ? <h1>MANAGER PAGE</h1> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+              <Route path="/manage_plumbers">
+                {user ? (user.type === "Plumber" && user.manager ? <ManagePlumbersPage plumbers={plumbers} setPlumbers={setPlumbers} /> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
               </Route>
 
               <Route path="/bills">

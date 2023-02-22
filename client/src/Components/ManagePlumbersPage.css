@@ -1,0 +1,26 @@
+.manage-plumbers-page{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+}
+.plumber-card{
+    background: #698ba7;
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 20rem;
+}
+.plumber-card > *{
+    padding: 0;
+    margin: 0;
+}
+.plumber-card h1{
+    font-size: x-large;
+    font-weight: bolder;
+}
+.plumber-card input{
+    width: 3rem;
+}

@@ -5,6 +5,11 @@ class UsersController < ApplicationController
         render json: @current_user, status: :ok
     end
 
+    def plumbers
+        plumbers = Plumber.all
+        render json: plumbers, status: :ok
+    end
+
     def create
         case params[:type]
 
@@ -13,6 +18,7 @@ class UsersController < ApplicationController
 
         when 'Plumber'
             @current_user = Plumber.create!(user_params)
+            @current_user.update!(manager: true) if Plumber.all.length < 2
         end
         session[:user_id] = @current_user.id
         render json: @current_user, status: :created

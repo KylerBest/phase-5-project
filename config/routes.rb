@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get "/bills/:id/pay", to: "bills#pay"
 
+  get "/plumbers", to: "users#plumbers"
+
   get "/jobs/:id/accept", to: "jobs#accept"
   get "/jobs/:id/start", to: "jobs#start"
   get "/jobs/:id/finish", to: "jobs#finish"

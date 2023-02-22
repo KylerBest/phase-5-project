@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
 
     def index
-        jobs = @current_user.jobs
+        jobs = Job.all
         render json: jobs, status: :ok
     end
 
