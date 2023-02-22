@@ -58,7 +58,7 @@ function App() {
   
   return (
     <Router>
-        <UserContext.Provider value={{user, setUser, openJobs, setOpenJobs}}>
+        <UserContext.Provider value={{user, setUser, openJobs, setOpenJobs, plumbers, setPlumbers}}>
           {user ? <Header/> : <></>}
           <div className="main">
             <Switch>
@@ -72,7 +72,7 @@ function App() {
               </Route>
 
               <Route path="/manage_plumbers">
-                {user ? (user.type === "Plumber" && user.manager ? <ManagePlumbersPage plumbers={plumbers} setPlumbers={setPlumbers} /> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+                {user ? (user.type === "Plumber" && user.manager ? <ManagePlumbersPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
               </Route>
 
               <Route path="/bills">

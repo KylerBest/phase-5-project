@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "/bills/:id/pay", to: "bills#pay"
 
   get "/plumbers", to: "users#plumbers"
+  post "/plumbers/:id/raise", to: "users#raise"
 
   get "/jobs/:id/accept", to: "jobs#accept"
   get "/jobs/:id/start", to: "jobs#start"

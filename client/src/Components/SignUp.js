@@ -17,7 +17,7 @@ function SignUp(){
     const [errors, setErrors] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
-    const {setUser, setOpenJobs} = useContext(UserContext)
+    const {setUser, setOpenJobs, setPlumbers} = useContext(UserContext)
 
     function onSignUp(e){
         e.preventDefault()
@@ -38,7 +38,17 @@ function SignUp(){
                         fetch('/open_jobs')
                         .then(r => {
                             if(r.ok){
-                                r.json().then(setOpenJobs)
+                                r.json().then(jobs => {
+                                    setOpenJobs(jobs)
+                                    if(user.manager){
+                                        fetch('/plumbers')
+                                        .then(r => {
+                                            if(r.ok){
+                                                r.json().then(setPlumbers)
+                                            }
+                                        })
+                                    }
+                                })
                             }
                         })
                     }

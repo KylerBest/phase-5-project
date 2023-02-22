@@ -1,7 +1,19 @@
+.manage-plumbers-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    padding: 4rem;
+}
+.manage-plumbers-container h1{
+    font-size: 3rem;
+}
 .manage-plumbers-page{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 2rem;
+    justify-content: center;
+    align-content: center;
 }
 .plumber-card{
     background: #698ba7;
@@ -11,7 +23,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 20rem;
 }
 .plumber-card > *{
     padding: 0;

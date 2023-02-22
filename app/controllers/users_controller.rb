@@ -10,6 +10,14 @@ class UsersController < ApplicationController
         render json: plumbers, status: :ok
     end
 
+    def raise
+        if @current_user.manager
+            plumber = Plumber.find_by(id: params[:id])
+            plumber.update!(wage: params[:wage])
+            render json: Plumber.all, status: :ok
+        end
+    end
+
     def create
         case params[:type]
 
@@ -35,7 +43,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:type, :name, :phone, :address, :email, :password, :password_confirmation)
+        params.permit(:type, :wage, :name, :phone, :address, :email, :password, :password_confirmation)
     end
 
 end
