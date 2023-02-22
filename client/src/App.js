@@ -83,11 +83,11 @@ function App() {
             </Route>
 
             <Route path="/sign_in">
-              <SignIn />
+              {user ? <Redirect to="/home"/> : <SignIn />}
             </Route>
 
             <Route path="/sign_up">
-              <SignUp />
+              {user ? <Redirect to="/home"/> : <SignUp />}
             </Route>
 
             <Route exact path="/">
