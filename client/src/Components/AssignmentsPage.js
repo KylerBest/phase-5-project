@@ -8,17 +8,17 @@ function AssignmentsPage(){
     const {user, setUser, openJobs, setOpenJobs} = useContext(UserContext)
 
     function statusColor(j){
-        switch(j.status){
-            case "Requested":
-                return "orange"
-            case "Accepted":
-                return "green"
-            case "In progress":
-                return "yellow"
-            case "Finished":
-                return "blue"
-            case "Canceled":
-                return "red"
+        switch (j.status) {
+        case "Accepted":
+            return "green";
+        case "In progress":
+            return "yellow";
+        case "Finished":
+            return "blue";
+        case "Canceled":
+            return "red";
+        default:
+            return "orange";
         }
     }
 
