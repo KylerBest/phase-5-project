@@ -56,11 +56,14 @@ form h1 p{
     font-size: small !important;
 }
 
+#unknown{
+    color: yellow;
+}
 .submit-button{
     padding: .5rem;
     margin-top: 1rem;
+    position: relative;
 }
-
-#unknown{
-    color: yellow;
+.submit-button:hover{
+    cursor: pointer;
 }

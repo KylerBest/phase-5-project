@@ -23,6 +23,7 @@ function App() {
   const [user, setUser] = useState(null)
   const [openJobs, setOpenJobs] = useState([])
   const [plumbers, setPlumbers] = useState([])
+  const [isLoginLoading, setIsLoginLoading] = useState(true)
   
   useEffect(() => {
     fetch('/auto_login')
@@ -47,10 +48,14 @@ function App() {
                   })
                 }
               })
-          }
+            }
+            setIsLoginLoading(false)
+            history.push("/home")
         })
       }else{
-        history.push('/sign_in')
+          setUser(null)
+          setIsLoginLoading(false)
+          history.push('/sign_in')
       }
     })
   }, [])
@@ -58,36 +63,36 @@ function App() {
   return (
     <Router>
       <UserContext.Provider value={{user, setUser, openJobs, setOpenJobs, plumbers, setPlumbers}}>
-        {user ? <Header/> : <></>}
-        <div className="main">
+        { user ? <Header/> : <></>}
+        {isLoginLoading ? <div className="main"><h1>Loading...</h1></div> : <div className="main">
           <Switch>
 
             <Route path="/home">
-              {user ? (user.type === "Client" ? <ClientJobsPage/> : <AssignmentsPage/>) : <h1>Loading...</h1>}
+              {user ? (user.type === "Client" ? <ClientJobsPage/> : <AssignmentsPage/>) : <Redirect to="/sign_in" />}
             </Route>
 
             <Route path="/open_jobs">
-              {user ? (user.type === "Plumber" ? <OpenJobsPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+              {user && user.type === "Plumber" ? (openJobs ? <OpenJobsPage/> : <h1>Loading...</h1>) : <Redirect to="/home"/>}
             </Route>
 
             <Route path="/manage_plumbers">
-              {user ? (user.type === "Plumber" && user.manager ? <ManagePlumbersPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+              {user && user.type === "Plumber" && user.manager ? (plumbers ? <ManagePlumbersPage/> : <h1>Loading...</h1>) : <Redirect to="/home"/>}
             </Route>
 
             <Route path="/bills">
-              {user ? (user.type === "Client" ? <BillsPage/> : <Redirect to="/home"/>) : <h1>Loading...</h1>}
+              {user && user.type === "Client" ? <BillsPage/> : <Redirect to="/home"/>}
             </Route>
 
             <Route path="/request">
-              {user ? (user.type === "Client" ? <ClientRequestForm /> : <Redirect to="/home" />) : <h1>Loading...</h1>}
+              {user && user.type === "Client" ? <ClientRequestForm /> : <Redirect to="/home" />}
             </Route>
 
             <Route path="/sign_in">
-              {user ? <Redirect to="/home"/> : <SignIn />}
+              <SignIn />
             </Route>
 
             <Route path="/sign_up">
-              {user ? <Redirect to="/home"/> : <SignUp />}
+              <SignUp />
             </Route>
 
             <Route exact path="/">
@@ -103,7 +108,7 @@ function App() {
             </Route>
 
           </Switch>
-        </div>
+        </div>}
       </UserContext.Provider>
     </Router>
   )

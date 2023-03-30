@@ -42,7 +42,7 @@ function Header(){
                     className={'tab' + (location.pathname === "/manage_plumbers" ? ' active-tab' : ' inactive-tab')} 
                 >Manage Plumbers</Link> : <></>}
                 {user.type === "Client" ? <Link to='/bills' 
-                    data-tooltip="View and pay the associated bills from your completed job requests." 
+                    data-tooltip="View and pay the bills from your completed job requests." 
                     className={'tab' + (location.pathname === '/bills' ? ' active-tab' : ' inactive-tab')}
                 >Bills</Link> : <></>}
                 {user.type === "Client" ? <Link to="/request" 
